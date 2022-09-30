@@ -156,6 +156,35 @@ def double_Lorentzian_func(x, a, b, c, a1, b1, c1, d):
     """
     return ((a * c**2) / ((x - b)**2 + c**2)) + ((a1 * c1**2) / ((x - b1)**2 + c1**2)) + d
 
+def Lorentzian_decay_func(x, a, b, c, a1, d):
+    """Defines the Rabi function for the fitting.
+    
+    Input:
+    x: Time.
+    a: Amplitude.
+    b: Center.
+    c: Sigma.
+    a1: Highest point of the decay.
+    d: Baseline.
+    """
+    return (a * c**2) / ((x - b)**2 + c**2) + a1 * x + d
+
+def double_Lorentzian_decay_func(x, a, b, c, a1, b1, c1, a2, d):
+    """Defines the Rabi function for the fitting.
+    
+    Input:
+    x: Time.
+    a: Amplitude.
+    b: Center.
+    c: Sigma.
+    a1: Second amplitude.
+    b1: Second center.
+    c1: Second sigma.
+    a2: Highest point of the decay.
+    d: Baseline.
+    """
+    return ((a * c**2) / ((x - b)**2 + c**2)) + ((a1 * c1**2) / ((x - b1)**2 + c1**2)) + a2 * x + d
+
 
 
 # FUNCTIONS FOR THE ANALYSIS
@@ -218,7 +247,7 @@ def depth(B, gamma_n, rho):
     return NV_depth
 
 def Lifetime_exp(xdata, ydata, lifetime):
-    """Calculates PL lifetime.
+    """Calculates PL lifetime from a counter's data.
     
     Input:
     xdata: Time, ps.
@@ -242,7 +271,7 @@ def Lifetime_exp(xdata, ydata, lifetime):
     return xfit, yfit, lt, popt, perr
 
 def Lifetime_double_exp(xdata, ydata, lifetime):
-    """Calculates PL lifetime with double exponential fitting.
+    """Calculates PL lifetime with double exponential fitting from a counter's data.
     
     Input:
     xdata: Time, ps.
@@ -283,14 +312,14 @@ def Estimation(nor, B_ext, gamma, gamma2, gamma_name, gamma2_name):
     Larm_freq = gamma * 1e-3 * B_ext    # kHz
     print(gamma_name + ' gyromagnetic ratio:', round((gamma * 1e-3),2), 'kHz/G')
     print(gamma_name + ' Larmor frequency:', round(Larm_freq,2), 'kHz')
-    print(gamma_name + ' expected value of tau:', round(tau,2), 'us')
+    print(gamma_name + ' expected value of tau:', round(tau,2), '\u03BCs')
     if nor == 2: # Isotope with lower gyromagnetic ratio
         tau2 = 1e6 / (2 * gamma2 * B_ext)    # us
         Larm_freq2 = gamma2 * 1e-3 * B_ext    # kHz
         print('\nFor the second signal:')
         print(gamma2_name + ' gyromagnetic ratio:', round((gamma2 * 1e-3),2), 'kHz/G')
         print(gamma2_name + ' Larmor frequency:', round(Larm_freq2,2), 'kHz')
-        print(gamma2_name + ' expected value of tau:', round(tau2,2), 'us')
+        print(gamma2_name + ' expected value of tau:', round(tau2,2), '\u03BCs')
         return tau, Larm_freq, tau2, Larm_freq2
     else:
         return tau, Larm_freq
