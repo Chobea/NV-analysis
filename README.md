@@ -1,2 +1,2 @@
 # NV-analysis
-Use a Table of Contents jupyter notebook extantion for navigation.
+Use a Table of Contents jupyter notebook extension for navigation.
