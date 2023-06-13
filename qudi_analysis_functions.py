@@ -184,6 +184,16 @@ def double_Lorentzian_decay_func(x, a, b, c, a1, b1, c1, a2, d):
     d: Baseline.
     """
     return ((a * c**2) / ((x - b)**2 + c**2)) + ((a1 * c1**2) / ((x - b1)**2 + c1**2)) + a2 * x + d
+    
+def decay_func(x, a, b):
+    """Defines linear decay for the fitting.
+    
+    Input:
+    x: Time.
+    a:.
+    b:.
+    """
+    return a * x + b
 
 
 
