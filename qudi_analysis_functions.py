@@ -24,6 +24,7 @@ gamma_123Te = 7.059098 * 1e7 * 1e-4 / (2 * np.pi)    # rad/s*T -> Hz/G
 gamma_19F = 25.18148 * 1e7 * 1e-4 / (2 * np.pi)    # rad/s*T -> Hz/G
 gamma_6Li = 3.9371709 * 1e7 * 1e-4 / (2 * np.pi)    # rad/s*T -> Hz/G
 gamma_7Li = 10.3977013 * 1e7 * 1e-4 / (2 * np.pi)    # rad/s*T -> Hz/G
+gamma_31P = 10.8394 * 1e7 * 1e-4 / (2 * np.pi)    # rad/s*T -> Hz/G
 
 
 
@@ -66,7 +67,7 @@ def mp_reader(filename):
     return time, counts
 
 def csvReader(filename):
-    """Imports .mp data from the counter.
+    """Imports .csv data from the spectrometer.
     
     Input:
     filename: Spectrometer data file.
@@ -198,6 +199,11 @@ def decay_func(x, a, b):
 
 
 # FUNCTIONS FOR THE ANALYSIS
+
+def thetaB(ODMR_delta):
+    i1 = ODMR_delta / 2870 * 1e6 # Hz
+    i2 = np.acos(i1)
+    return (i2/2)*(180/np.pi)
 
 def norm(XY8_signal, Rabi_signal, XY8_level):
     """Defines the XY8 signal normalized to the contrast of the Rabi oscillation.
