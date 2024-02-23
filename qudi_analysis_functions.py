@@ -200,6 +200,31 @@ def decay_func(x, a, b):
 
 # FUNCTIONS FOR THE ANALYSIS
 
+def Estimation(nor, B_ext, gamma, gamma2, gamma_name, gamma2_name):
+    """Calculates and prints estimated values for the XY8 measurements.
+    
+    Input:
+    nor: Number of measured resonances.
+    B_ext: Applied external magnetic field.
+    gamma: Isotope gyromagnetic ratio.
+    """
+    print('Magnetic field projection on the NV center axis:', round(B_ext,2), 'G\n')
+    tau = 1e6 / (2 * gamma * B_ext)    # us
+    Larm_freq = gamma * 1e-3 * B_ext    # kHz
+    print(gamma_name + ' gyromagnetic ratio:', round((gamma * 1e-3),2), 'kHz/G')
+    print(gamma_name + ' Larmor frequency:', round(Larm_freq,2), 'kHz')
+    print(gamma_name + ' expected value of tau:', round(tau,2), '\u03BCs')
+    if nor == 2: # Isotope with lower gyromagnetic ratio
+        tau2 = 1e6 / (2 * gamma2 * B_ext)    # us
+        Larm_freq2 = gamma2 * 1e-3 * B_ext    # kHz
+        print('\nFor the second signal:')
+        print(gamma2_name + ' gyromagnetic ratio:', round((gamma2 * 1e-3),2), 'kHz/G')
+        print(gamma2_name + ' Larmor frequency:', round(Larm_freq2,2), 'kHz')
+        print(gamma2_name + ' expected value of tau:', round(tau2,2), '\u03BCs')
+        return tau, Larm_freq, tau2, Larm_freq2
+    else:
+        return tau, Larm_freq
+
 def thetaB(ODMR_delta):
     i1 = ODMR_delta / 2870 * 1e6 # Hz
     i2 = np.acos(i1)
@@ -311,31 +336,3 @@ def Lifetime_double_exp(xdata, ydata, lifetime):
 #    print('  Lifetime, ns: ', lt, "\u00B1", perr[1] * 1e9)
 #    print('  Lifetime2, ns: ', lt2, "\u00B1", perr[3] * 1e9)
     return xfit, yfit, lt, lt2, popt, perr
-
-
-
-# FUNCTIONS THAT WILL PRINT OR PLOT
-def Estimation(nor, B_ext, gamma, gamma2, gamma_name, gamma2_name):
-    """Calculates and prints estimated values for the XY8 measurements.
-    
-    Input:
-    nor: Number of measured resonances.
-    B_ext: Applied external magnetic field.
-    gamma: Isotope gyromagnetic ratio.
-    """
-    print('Magnetic field projection on the NV center axis:', round(B_ext,2), 'G\n')
-    tau = 1e6 / (2 * gamma * B_ext)    # us
-    Larm_freq = gamma * 1e-3 * B_ext    # kHz
-    print(gamma_name + ' gyromagnetic ratio:', round((gamma * 1e-3),2), 'kHz/G')
-    print(gamma_name + ' Larmor frequency:', round(Larm_freq,2), 'kHz')
-    print(gamma_name + ' expected value of tau:', round(tau,2), '\u03BCs')
-    if nor == 2: # Isotope with lower gyromagnetic ratio
-        tau2 = 1e6 / (2 * gamma2 * B_ext)    # us
-        Larm_freq2 = gamma2 * 1e-3 * B_ext    # kHz
-        print('\nFor the second signal:')
-        print(gamma2_name + ' gyromagnetic ratio:', round((gamma2 * 1e-3),2), 'kHz/G')
-        print(gamma2_name + ' Larmor frequency:', round(Larm_freq2,2), 'kHz')
-        print(gamma2_name + ' expected value of tau:', round(tau2,2), '\u03BCs')
-        return tau, Larm_freq, tau2, Larm_freq2
-    else:
-        return tau, Larm_freq
