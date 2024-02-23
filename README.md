@@ -5,4 +5,4 @@ The NV-analysis script was written during my PhD in Helmholtz-Zentrum Berlin, Ge
 
 "qudi_analysis_functions.py" contains main constants and defined functions required for the data import, analysis and fitting.
 
-Last script update: 02.02.2024
+Last script update: 23.02.2024
